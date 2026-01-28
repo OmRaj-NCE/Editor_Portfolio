@@ -94,6 +94,182 @@
             font-weight: 700;
         }
         
+        /* Header Navigation */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 15, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .main-header.scrolled {
+            padding: 15px 0;
+            background: rgba(5, 5, 9, 0.95);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 clamp(15px, 4vw, 30px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 8px 0;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gradient);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        
+        .nav-links a:hover {
+            color: var(--neon-cyan);
+        }
+        
+        .nav-links a.active {
+            color: var(--neon-cyan);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: none;
+            padding: 5px;
+        }
+        
+        .mobile-menu-btn:hover {
+            color: var(--neon-cyan);
+        }
+        
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: rgba(5, 5, 9, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 1001;
+            padding: 80px 30px 30px;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .mobile-nav.active {
+            right: 0;
+        }
+        
+        .mobile-nav-links {
+            list-style: none;
+        }
+        
+        .mobile-nav-links li {
+            margin-bottom: 20px;
+        }
+        
+        .mobile-nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 10px 15px;
+            display: block;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .mobile-nav-links a:hover,
+        .mobile-nav-links a.active {
+            background: rgba(0, 243, 255, 0.1);
+            border-color: rgba(0, 243, 255, 0.3);
+            color: var(--neon-cyan);
+        }
+        
+        .mobile-nav-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: none;
+            padding: 5px;
+        }
+        
+        .mobile-nav-close:hover {
+            color: var(--neon-cyan);
+        }
+        
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
         /* Layout */
         .container {
             width: 100%;
@@ -326,7 +502,7 @@
             box-shadow: 0 10px 30px rgba(0, 243, 255, 0.1);
         }
         
-        /* Enhanced CTA Buttons */
+        /* Enhanced CTA Buttons with Floating Text */
         .cta-buttons {
             display: flex;
             gap: clamp(15px, 3vw, 25px);
@@ -335,6 +511,63 @@
             flex-wrap: wrap;
             position: relative;
             z-index: 10;
+            align-items: center;
+        }
+        
+        /* Scroll Hint for Desktop */
+        .scroll-hint-desktop {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--neon-cyan);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            opacity: 0.8;
+            pointer-events: none;
+            animation: floatText 3s ease-in-out infinite;
+            text-align: center;
+            white-space: nowrap;
+        }
+        
+        @keyframes floatText {
+            0%, 100% {
+                transform: translate(-50%, -50%) translateY(0);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translate(-50%, -50%) translateY(-10px);
+                opacity: 1;
+                text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+            }
+        }
+        
+        /* Scroll Hint for Mobile */
+        .scroll-hint-mobile {
+            display: none;
+            width: 100%;
+            text-align: center;
+            margin-top: 30px;
+            color: var(--neon-cyan);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            opacity: 0.8;
+            animation: fadeInOut 2s ease-in-out infinite;
+        }
+        
+        @keyframes fadeInOut {
+            0%, 100% {
+                opacity: 0.6;
+            }
+            50% {
+                opacity: 1;
+                text-shadow: 0 0 8px rgba(0, 243, 255, 0.4);
+            }
         }
         
         .btn {
@@ -736,6 +969,7 @@
             padding: clamp(30px, 5vw, 50px) 0 30px;
             text-align: center;
             border-top: 1px solid var(--glass-border);
+            margin-top: 50px;
         }
         
         .social-icons {
@@ -786,11 +1020,11 @@
             transition: width 0.1s ease;
         }
         
-        /* WhatsApp Chat Widget Styles */
+        /* WhatsApp Chat Widget Styles - REMOVED ONE BUTTON */
         #whatsapp-widget {
             position: fixed;
-            bottom: 100px;
-            right: 25px;
+            bottom: 30px;
+            right: 30px;
             z-index: 9997;
             font-family: 'Poppins', sans-serif;
         }
@@ -1012,37 +1246,39 @@
             transform: scale(1.1);
         }
         
-        #whatsapp-float {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            width: clamp(50px, 8vw, 60px);
-            height: clamp(50px, 8vw, 60px);
-            background: #25D366;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: clamp(24px, 5vw, 32px);
-            text-decoration: none;
-            z-index: 9999;
-            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.5);
-            transition: all 0.3s ease;
-            cursor: none;
-            animation: pulse 2s infinite;
-        }
-        
         @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
             70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
             100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
         }
         
-        #whatsapp-float:hover {
-            transform: scale(1.2);
-            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.8);
-            animation: none;
+        /* Show desktop scroll hint on larger screens */
+        @media (min-width: 769px) {
+            .scroll-hint-desktop {
+                display: block;
+            }
+            
+            /* Position buttons with space for the floating text */
+            .cta-buttons {
+                position: relative;
+                padding: 0 100px;
+            }
+            
+            .cta-buttons a {
+                z-index: 2;
+            }
+        }
+        
+        /* Show mobile scroll hint on smaller screens */
+        @media (max-width: 768px) {
+            .scroll-hint-mobile {
+                display: block;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
         }
         
         /* Mobile Optimizations */
@@ -1053,6 +1289,18 @@
             
             .cursor, .cursor-follower {
                 display: none;
+            }
+            
+            .main-header {
+                padding: 15px 0;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
             }
             
             .cta-buttons {
@@ -1087,18 +1335,13 @@
             }
             
             #whatsapp-widget {
-                bottom: 90px;
-                right: 15px;
+                bottom: 20px;
+                right: 20px;
             }
             
             #wa-chat-box {
                 width: 280px;
                 right: -10px;
-            }
-            
-            #whatsapp-float {
-                bottom: 20px;
-                right: 20px;
             }
         }
         
@@ -1115,6 +1358,7 @@
             
             .hero-title {
                 font-size: 2.5rem;
+                margin-top: 40px;
             }
             
             .typewriter-text {
@@ -1126,12 +1370,17 @@
             }
             
             #whatsapp-widget {
-                bottom: 80px;
-                right: 10px;
+                bottom: 15px;
+                right: 15px;
             }
             
             #wa-chat-box {
                 width: 260px;
+            }
+            
+            .scroll-hint-mobile {
+                font-size: 0.8rem;
+                margin-top: 20px;
             }
         }
         
@@ -1145,7 +1394,7 @@
                 display: none;
             }
             
-            .btn, .contact-btn, .skill-card, .folder, .social-icon, #whatsapp-float, #wa-chat-toggle, #wa-send-button, #wa-chat-close {
+            .btn, .contact-btn, .skill-card, .folder, .social-icon, #wa-chat-toggle, #wa-send-button, #wa-chat-close, .mobile-menu-btn, .mobile-nav-close, .nav-links a {
                 cursor: pointer;
             }
             
@@ -1162,6 +1411,46 @@
     
     <!-- Scroll Progress Indicator -->
     <div class="scroll-progress"></div>
+
+    <!-- Header Navigation -->
+    <header class="main-header" id="main-header">
+        <div class="header-container">
+            <a href="#home" class="logo">OMRAJ</a>
+            
+            <!-- Desktop Navigation -->
+            <nav class="desktop-nav">
+                <ul class="nav-links">
+                    <li><a href="#home" class="nav-link active">Home</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#skills" class="nav-link">Skills</a></li>
+                    <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobile-nav">
+        <button class="mobile-nav-close" id="mobile-nav-close">
+            <i class="fas fa-times"></i>
+        </button>
+        <ul class="mobile-nav-links">
+            <li><a href="#home" class="mobile-nav-link active">Home</a></li>
+            <li><a href="#about" class="mobile-nav-link">About</a></li>
+            <li><a href="#skills" class="mobile-nav-link">Skills</a></li>
+            <li><a href="#portfolio" class="mobile-nav-link">Portfolio</a></li>
+            <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay" id="nav-overlay"></div>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
@@ -1189,14 +1478,21 @@
                 Transforming raw footage into high-retention Gen-Z content that stops the scroll and drives results.
             </p>
             
-            <!-- CTA Buttons -->
+            <!-- CTA Buttons with Floating Text -->
             <div class="cta-buttons">
                 <a href="https://portfolio.malloy.sg/omraj" class="btn btn-primary" id="portfolio-btn">
                     <i class="fas fa-eye"></i> View Portfolio
                 </a>
+                
+                <!-- Desktop Floating Text (between buttons) -->
+                <div class="scroll-hint-desktop">Scroll down for more</div>
+                
                 <a href="#" class="btn btn-secondary" id="hire-btn">
                     <i class="fas fa-briefcase"></i> Hire Me
                 </a>
+                
+                <!-- Mobile Floating Text (below buttons) -->
+                <div class="scroll-hint-mobile">Scroll down for more</div>
             </div>
         </div>
     </section>
@@ -1425,14 +1721,110 @@
         </div>
     </div>
 
-    <!-- Floating WhatsApp Button -->
-    <a href="#" id="whatsapp-float">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-
     <script>
         // Main JavaScript
         document.addEventListener('DOMContentLoaded', function() {
+            // Navigation Elements
+            const mainHeader = document.getElementById('main-header');
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileNav = document.getElementById('mobile-nav');
+            const mobileNavClose = document.getElementById('mobile-nav-close');
+            const navOverlay = document.getElementById('nav-overlay');
+            const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+            
+            // FAST SCROLLING - Reduced duration for faster navigation
+            const SCROLL_DURATION = 0.6; // Reduced from 1.2 to 0.6 seconds (50% faster)
+            
+            // Header scroll effect
+            function updateHeaderOnScroll() {
+                if (window.scrollY > 50) {
+                    mainHeader.classList.add('scrolled');
+                } else {
+                    mainHeader.classList.remove('scrolled');
+                }
+            }
+            
+            window.addEventListener('scroll', updateHeaderOnScroll);
+            updateHeaderOnScroll(); // Initialize on load
+            
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileNav.classList.add('active');
+                navOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            // Close mobile menu
+            function closeMobileMenu() {
+                mobileNav.classList.remove('active');
+                navOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+            
+            mobileNavClose.addEventListener('click', closeMobileMenu);
+            navOverlay.addEventListener('click', closeMobileMenu);
+            
+            // Navigation link click handler - FASTER SCROLLING
+            function handleNavClick(e, link) {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    // Close mobile menu if open
+                    closeMobileMenu();
+                    
+                    // FAST smooth scroll to section
+                    gsap.to(window, {
+                        duration: SCROLL_DURATION, // Much faster
+                        scrollTo: {
+                            y: targetSection,
+                            offsetY: 80
+                        },
+                        ease: "power2.inOut" // Changed to power2 for faster acceleration
+                    });
+                    
+                    // Update active state
+                    navLinks.forEach(navLink => navLink.classList.remove('active'));
+                    link.classList.add('active');
+                }
+            }
+            
+            // Add click event to desktop navigation links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', (e) => handleNavClick(e, link));
+            });
+            
+            // Add click event to mobile navigation links
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', (e) => handleNavClick(e, link));
+            });
+            
+            // Update active link on scroll
+            function updateActiveLink() {
+                const sections = document.querySelectorAll('section');
+                const scrollPos = window.scrollY + 100;
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${sectionId}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', updateActiveLink);
+            updateActiveLink(); // Initialize on load
+            
             // Custom Cursor
             const cursor = document.querySelector('.cursor');
             const follower = document.querySelector('.cursor-follower');
@@ -1447,7 +1839,7 @@
                 });
                 
                 // Add hover effect for interactive elements
-                const interactiveElements = document.querySelectorAll('a, button, .skill-card, .folder, .contact-btn, .social-icon, #whatsapp-float, #wa-chat-toggle, #wa-send-button, #wa-chat-close');
+                const interactiveElements = document.querySelectorAll('a, button, .skill-card, .folder, .contact-btn, .social-icon, #wa-chat-toggle, #wa-send-button, #wa-chat-close, .mobile-menu-btn, .mobile-nav-close, .nav-link');
                 
                 interactiveElements.forEach(element => {
                     element.addEventListener('mouseenter', () => {
@@ -1894,16 +2286,6 @@ ${name}`;
                 showNotification('Message sent successfully!', 'success');
             });
             
-            // WhatsApp Floating Button
-            const whatsappFloat = document.getElementById('whatsapp-float');
-            if (whatsappFloat) {
-                whatsappFloat.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const message = "Hello OmRaj! I'm interested in your video editing services. Let's discuss my project.";
-                    window.open(`https://wa.me/918789777497?text=${encodeURIComponent(message)}`, '_blank');
-                });
-            }
-            
             // Notification function
             function showNotification(message, type = 'success') {
                 const notification = document.createElement('div');
@@ -1912,7 +2294,7 @@ ${name}`;
                 
                 notification.style.cssText = `
                     position: fixed;
-                    top: 20px;
+                    top: 80px;
                     right: 20px;
                     background: ${bgColor};
                     color: white;
@@ -1952,6 +2334,51 @@ ${name}`;
                     notification.style.transform = 'translateX(120%)';
                     setTimeout(() => notification.remove(), 400);
                 }, 4000);
+            }
+            
+            // Make scroll hint clickable to scroll to about section
+            const scrollHintDesktop = document.querySelector('.scroll-hint-desktop');
+            const scrollHintMobile = document.querySelector('.scroll-hint-mobile');
+            
+            function scrollToAbout() {
+                const aboutSection = document.querySelector('#about');
+                if (aboutSection) {
+                    // FAST scroll using the same fast speed
+                    gsap.to(window, {
+                        duration: SCROLL_DURATION,
+                        scrollTo: {
+                            y: aboutSection,
+                            offsetY: 80
+                        },
+                        ease: "power2.inOut"
+                    });
+                    
+                    // Update active nav link
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    document.querySelector('.nav-link[href="#about"]').classList.add('active');
+                    document.querySelector('.mobile-nav-link[href="#about"]').classList.add('active');
+                }
+            }
+            
+            // Make scroll hints clickable
+            if (scrollHintDesktop) {
+                scrollHintDesktop.style.cursor = 'none';
+                scrollHintDesktop.style.pointerEvents = 'auto';
+                scrollHintDesktop.addEventListener('click', scrollToAbout);
+                scrollHintDesktop.addEventListener('mouseenter', () => {
+                    if (cursor) cursor.classList.add('hover');
+                    if (follower) follower.classList.add('hover');
+                });
+                scrollHintDesktop.addEventListener('mouseleave', () => {
+                    if (cursor) cursor.classList.remove('hover');
+                    if (follower) follower.classList.remove('hover');
+                });
+            }
+            
+            if (scrollHintMobile) {
+                scrollHintMobile.style.cursor = 'pointer';
+                scrollHintMobile.style.pointerEvents = 'auto';
+                scrollHintMobile.addEventListener('click', scrollToAbout);
             }
         });
     </script>
